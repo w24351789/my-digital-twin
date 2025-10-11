@@ -46,7 +46,6 @@ def train(args):
         model=model,
         train_dataset=dataset,
         peft_config=lora_config,
-        dataset_text_field="text",
         args=training_args,
     )
 
