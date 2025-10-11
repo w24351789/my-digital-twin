@@ -36,8 +36,9 @@ def train(args):
         learning_rate=5e-5,
         logging_steps=10,
         num_train_epochs=10,
-        save_strategy="epoch",
-        save_total_limit=1,
+        save_strategy="steps",
+        save_steps=100,
+        save_total_limit=3,
         fp16=True, # Use fp16 for mixed-precision training
     )
 
