@@ -59,7 +59,7 @@ def train(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine-tune a language model.")
     parser.add_argument("--model_name", type=str, default="Qwen/Qwen1.5-7B-Chat", help="The name of the base model to use.")
-    parser.add_argument("--dataset_path", type=str, default="/drive/Mydrive/my-digital-twin/data/training_dataset.jsonl", help="Path to the training dataset.")
-    parser.add_argument("--output_dir", type=str, default="/drive/Mydrive/my-digital-twin/naomi-chatbot-adapter", help="Directory to save the LoRA adapter.")
+    parser.add_argument("--dataset_path", type=str, default="/content/drive/Mydrive/my-digital-twin/data/training_dataset.jsonl", help="Path to the training dataset.")
+    parser.add_argument("--output_dir", type=str, default="/content/drive/Mydrive/my-dig/naomi-chatbot-adapter", help="Directory to save the LoRA adapter.")
     args = parser.parse_args()
     train(args)
