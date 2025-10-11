@@ -32,8 +32,8 @@ def train(args):
     training_args = TrainingArguments(
         output_dir=args.output_dir,
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=1,
-        learning_rate=2e-4,
+        gradient_accumulation_steps=4,
+        learning_rate=5e-5,
         logging_steps=10,
         num_train_epochs=10,
         save_strategy="epoch",
