@@ -22,7 +22,7 @@ def parse_line_chat(input_file, output_file, my_name):
                 continue
 
             # Regex to match the timestamp, sender, and message
-            chat_match = re.match(r'^(\d{2}:\d{2})\s(👾TED👾|羽含 Naomi)\s(.*)', line)
+            chat_match = re.match(r'^(\d{2}:\d{2})\s(.*?)\s(.*)', line)
             if chat_match:
                 _, sender, message_text = chat_match.groups()
                 
