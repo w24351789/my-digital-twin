@@ -34,7 +34,7 @@ def train(args):
         gradient_accumulation_steps=1,
         learning_rate=2e-4,
         logging_steps=10,
-        num_train_epochs=3,
+        num_train_epochs=10,
         save_steps=100,
         fp16=True, # Use fp16 for mixed-precision training
     )
