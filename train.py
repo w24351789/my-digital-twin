@@ -45,7 +45,6 @@ def train(args):
         train_dataset=dataset,
         peft_config=lora_config,
         args=training_args,
-        max_seq_length=1024,
     )
 
     # 6. Start training
