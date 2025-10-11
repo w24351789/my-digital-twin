@@ -2,6 +2,12 @@ import re
 import json
 import argparse
 
+def format_chat_template(messages):
+    chat_string = ""
+    for message in messages:
+        chat_string += f"<|im_start|>{message['role']}\n{message['content']}<|im_end|>\n"
+    return chat_string
+
 def parse_line_chat(input_file, output_file, my_name):
     """
     Parses a LINE chat log file and converts it into a JSONL file
@@ -16,7 +22,7 @@ def parse_line_chat(input_file, output_file, my_name):
                 continue
 
             # Regex to match the timestamp, sender, and message
-            chat_match = re.match(r'^(\d{2}:\d{2})\s(👾TED👾|\u7fbd\u542b Naomi)\s(.*)', line)
+            chat_match = re.match(r'^(\d{2}:\d{2})\s(👾TED👾|羽含 Naomi)\s(.*)', line)
             if chat_match:
                 _, sender, message_text = chat_match.groups()
                 
@@ -29,7 +35,7 @@ def parse_line_chat(input_file, output_file, my_name):
                     messages.append({"role": role, "content": message_text})
 
     with open(output_file, 'w', encoding='utf-8') as f_out:
-        f_out.write(json.dumps({"messages": messages}, ensure_ascii=False) + '\n')
+        f_out.write(json.dumps({"text": format_chat_template(messages)}, ensure_ascii=False) + '\n')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse LINE chat logs.")
