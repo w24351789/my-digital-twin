@@ -8,7 +8,7 @@ def format_chat_template(messages):
         chat_string += f"<|im_start|>{message['role']}\n{message['content']}<|im_end|>\n"
     return chat_string
 
-def parse_line_chat(input_file, output_file, my_name):
+def parse_line_chat(input_file, output_file, my_name, context_window=10):
     """
     Parses a LINE chat log file and converts it into a JSONL file
     with the ChatML format.
@@ -37,8 +37,9 @@ def parse_line_chat(input_file, output_file, my_name):
     with open(output_file, 'w', encoding='utf-8') as f_out:
         for i, message in enumerate(messages):
             if message["role"] == "assistant":
-                # Create a training example with the conversation history up to this point
-                history = messages[:i+1]
+                # Create a training example with a sliding window of context
+                start_index = max(0, i - context_window)
+                history = messages[start_index:i+1]
                 formatted_chat = format_chat_template(history)
                 f_out.write(json.dumps({"text": formatted_chat}, ensure_ascii=False) + '\n')
 
@@ -47,6 +48,7 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", required=True, help="Path to the input LINE chat log file.")
     parser.add_argument("--output_file", required=True, help="Path to the output JSONL file.")
     parser.add_argument("--my_name", required=True, help="Your name in the chat log.")
+    parser.add_argument("--context_window", type=int, default=10, help="The number of previous messages to include as context.")
     args = parser.parse_args()
 
-    parse_line_chat(args.input_file, args.output_file, args.my_name)
+    parse_line_chat(args.input_file, args.output_file, args.my_name, args.context_window)
