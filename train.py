@@ -43,7 +43,6 @@ def train(args):
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset,
-        dataset_text_field="text",
         peft_config=lora_config,
         args=training_args,
         max_seq_length=1024,
