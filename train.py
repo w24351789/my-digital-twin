@@ -30,7 +30,7 @@ def train(args):
     # 4. Set up training arguments
     training_args = TrainingArguments(
         output_dir=args.output_dir,
-        per_device_train_batch_size=4,
+        per_device_train_batch_size=1,
         gradient_accumulation_steps=4,
         learning_rate=2e-4,
         logging_steps=10,
