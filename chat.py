@@ -5,7 +5,7 @@ from peft import PeftModel
 def main():
     # Model and adapter paths
     model_name = "Qwen/Qwen1.5-7B-Chat"
-    adapter_path = "./naomi-chatbot-adapter"
+    adapter_path = "/drive/Mydrive/my-digital-twin/naomi-chatbot-adapter"
 
     # Load tokenizer and base model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
