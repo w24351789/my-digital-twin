@@ -35,7 +35,12 @@ def parse_line_chat(input_file, output_file, my_name):
                     messages.append({"role": role, "content": message_text})
 
     with open(output_file, 'w', encoding='utf-8') as f_out:
-        f_out.write(json.dumps({"text": format_chat_template(messages)}, ensure_ascii=False) + '\n')
+        for i, message in enumerate(messages):
+            if message["role"] == "assistant":
+                # Create a training example with the conversation history up to this point
+                history = messages[:i+1]
+                formatted_chat = format_chat_template(history)
+                f_out.write(json.dumps({"text": formatted_chat}, ensure_ascii=False) + '\n')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse LINE chat logs.")
