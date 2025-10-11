@@ -8,6 +8,7 @@ from trl import SFTTrainer
 def train(args):
     # 1. Load tokenizer and model
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+    tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(
         args.model_name,
         device_map="auto",
@@ -35,7 +36,8 @@ def train(args):
         learning_rate=2e-4,
         logging_steps=10,
         num_train_epochs=10,
-        save_steps=100,
+        save_strategy="epoch",
+        save_total_limit=1,
         fp16=True, # Use fp16 for mixed-precision training
     )
 
@@ -44,6 +46,7 @@ def train(args):
         model=model,
         train_dataset=dataset,
         peft_config=lora_config,
+        dataset_text_field="text",
         args=training_args,
     )
 

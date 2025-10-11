@@ -1,11 +1,12 @@
 import torch
+import argparse
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
-def main():
+def main(args):
     # Model and adapter paths
-    model_name = "Qwen/Qwen1.5-1.8B-Chat"
-    adapter_path = "/content/drive/MyDrive/my-digital-twin/naomi-chatbot-adapter"
+    model_name = args.model_name
+    adapter_path = args.adapter_path
 
     # Load tokenizer and base model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -39,7 +40,7 @@ def main():
         )
 
         # Tokenize the input
-        model_inputs = tokenizer([messages], return_tensors="pt").to("cuda")
+        model_inputs = tokenizer([messages], return_tensors="pt").to(model.device)
 
         # Generate a response
         generated_ids = model.generate(
@@ -58,4 +59,8 @@ def main():
         print(f"Bot: {response}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Chat with the fine-tuned model.")
+    parser.add_argument("--model_name", type=str, default="Qwen/Qwen1.5-1.8B-Chat", help="The name of the base model to use.")
+    parser.add_argument("--adapter_path", type=str, default="/content/drive/MyDrive/my-digital-twin/naomi-chatbot-adapter", help="Path to the LoRA adapter.")
+    args = parser.parse_args()
+    main(args)
